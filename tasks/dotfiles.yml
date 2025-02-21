@@ -1,0 +1,25 @@
+---
+- name: Clone dotfiles repository
+  become: false
+  git:
+    repo: "https://github.com/dimanu-py/dotfiles.git"
+    version: ubuntu
+    dest: "{{ home }}/.dotfiles"
+    update: yes
+
+- name: Apply configuration files
+  become: false
+  command: stow --adopt bat fish kitty local monitors ranger starship vs-code zsh
+  args:
+    chdir: "{{ home }}/.dotfiles"
+
+- name: Copy git configuration
+  become: false
+  file:
+    src: "{{ home }}/.dotfiles/gitconfig/{{ item }}"
+    dest: "{{ home }}/{{ item }}"
+    state: link
+    force: yes
+  loop:
+    - .gitconfig
+    - .gitignore
