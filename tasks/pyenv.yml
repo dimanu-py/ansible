@@ -1,0 +1,47 @@
+---
+- name: Install dependencies for pyenv
+  apt:
+    name:
+      - make
+      - zlib1g-dev
+      - llvm
+      - python3-venv
+    state: present
+
+- name: Install pyenv
+  become: false
+  shell: >
+    curl https://pyenv.run | bash
+  args:
+    executable: /bin/fish
+    chdir: "{{ home }}"
+    creates: "{{ home }}/.pyenv/bin/pyenv"
+
+- name: Set fish shell
+  become: false
+  block:
+    - name: Add pyenv to fish config
+      lineinfile:
+        path: ~/.config/fish/config.fish
+        line: |
+          set -Ux PYENV_ROOT "$HOME/.pyenv"
+          fish_add_path "$PYENV_ROOT/bin"
+        create: yes
+
+- name: Install python version
+  become: false
+  shell: >
+      pyenv install "{{ python_version }}"
+  args:
+    executable: /bin/fish
+    chdir: "{{ home }}"
+    creates: "{{ home }}/.pyenv/versions/{{ python_version }}"
+
+- name: Create virtual environment
+  become: false
+  shell: >
+      pyenv virtualenv "{{ python_version }}" "{{ python_env_name }}"
+  args:
+    executable: /bin/fish
+    chdir: "{{ home }}"
+    creates: "{{ home }}/.pyenv/versions/{{ python_version }}/envs/{{ python_env_name }}"
