@@ -1,0 +1,25 @@
+---
+- name: Set variables
+  set_fact:
+    download_url: "https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.5.3.37797.tar.gz"
+    download_destination: "{{ home }}/Downloads/jetbrains-toolbox-2.5.3.37797.tar.gz"
+    installation_destination: "/opt"
+    path_to_executable: "/opt/jetbrains-toolbox-2.5.3.37797.tar.gz/jetbrains-toolbox"
+
+- name: Download installer
+  become: false
+  get_url:
+    url: "{{ download_url }}"
+    dest: "{{ download_destination }}"
+    mode: '0755'
+
+- name: Extract installer file
+  command: "tar -xzf {{ download_destination }} -C {{ installation_destination }}"
+  args:
+    creates: "{{ installation_destination }}/jetbrains-toolbox-2.5.3.37797.tar.gz" # Prevent re-extraction if already done
+
+- name: Install system dependencies
+  apt:
+    name: libfuse2
+    state: present
+    update_cache: yes
