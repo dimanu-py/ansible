@@ -1,0 +1,15 @@
+---
+- name: Set variables
+  set_fact:
+    wallpaper: "Pictures/wallpapers/dunes-sun.jpg"
+
+- name: Clone wallpaper repository
+  become: false
+  git:
+    repo: "https://github.com/dimanu-py/wallpapers.git"
+    version: master
+    dest: "{{ home }}/Pictures/wallpapers"
+    update: yes
+
+- name: Set wallpaper
+  command: gsettings set org.gnome.desktop.background picture-uri "file:///{{ home }}/{{ wallpaper}}"
