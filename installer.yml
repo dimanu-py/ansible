@@ -1,0 +1,48 @@
+---
+- name: Install dependencies
+  hosts: hosts
+  become: true
+  vars_files:
+    - variables.yml
+  tasks:
+    - import_tasks: tasks/basic_deps.yml
+      tags: basic-deps
+    - import_tasks: tasks/git_tools.yml
+      tags: git
+    - import_tasks: tasks/shell.yml
+      tags: shell
+    - import_tasks: tasks/terminal.yml
+      tags: terminal
+
+- name: Download applications
+  hosts: hosts
+  become: true
+  vars_files:
+    - variables.yml
+  tasks:
+    - import_tasks: tasks/google_chrome.yml
+      tags: chrome
+    - import_tasks: tasks/jetbrains_toolbox.yml
+      tags: jetbrains
+    - import_tasks: tasks/display_link.yml
+      tags: display-link
+    - import_tasks: tasks/postman.yml
+      tags: postman
+
+- name: Setup dotfiles and IDE
+  hosts: hosts
+  vars_files:
+    - variables.yml
+  tasks:
+    - import_tasks: tasks/dotfiles.yml
+      tags: dotfiles
+    - import_tasks: tasks/pyenv.yml
+      tags: pyenv
+
+- name: Wallpaper
+  hosts: hosts
+  vars_files:
+    - variables.yml
+  tasks:
+    - import_tasks: tasks/wallpaper.yml
+      tags: wallpaper
