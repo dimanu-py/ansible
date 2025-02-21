@@ -1,0 +1,32 @@
+---
+- name: Install kitty terminal
+  apt:
+    name: kitty
+    state: present
+
+- name: Install starship prompt
+  shell: >
+    curl -sS https://starship.rs/install.sh | sh
+  args:
+    executable: /bin/bash
+    chdir: "{{ home }}"
+    creates: "/usr/local/bin/starship"
+
+- name: Install fuzzy file searcher
+  apt:
+    name: fzf
+    state: present
+
+- name: Install fuzzy cd
+  shell: >
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  args:
+    executable: /bin/bash
+    chdir: "{{ home }}"
+
+- name: Install ls and cat replacements
+  apt:
+    name:
+      - bat
+      - eza
+    state: present
