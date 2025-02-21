@@ -1,0 +1,6 @@
+---
+- name: Install uv dependency manager
+  shell: >
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+  args:
+    executable: /bin/bash

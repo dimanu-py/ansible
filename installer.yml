@@ -38,6 +38,8 @@
       tags: dotfiles
     - import_tasks: tasks/pyenv.yml
       tags: pyenv
+    - import_tasks: tasks/uv.yml
+      tags: uv
 
 - name: Wallpaper
   hosts: hosts
