@@ -1,0 +1,20 @@
+---
+- name: Set variables
+  set_fact:
+    download_url: "https://www.synaptics.com/sites/default/files/Ubuntu/pool/stable/main/all/synaptics-repository-keyring.deb"
+    download_destination: "{{ home }}/Downloads/synaptics-repository-keyring.deb"
+
+- name: Download installer
+  become: false
+  get_url:
+    url: "{{ download_url }}"
+    dest: "{{ download_destination }}"
+    mode: '0644'
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install DisplayLink driver
+  apt:
+    name: displaylink-driver
