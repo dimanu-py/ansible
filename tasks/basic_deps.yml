@@ -1,0 +1,29 @@
+- name: Update apt
+  apt:
+    update_cache: yes
+- name: Install dependencies
+  apt:
+    name:
+      - git
+      - htop
+      - unzip
+      - zip
+      - wget
+      - curl
+      - nano
+      - build-essential
+      - python3-psutil
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+      - stow
+    state: present
