@@ -1,0 +1,13 @@
+---
+- name: Add diff-so-fancy repository
+  apt_repository:
+    repo: ppa:aos1/diff-so-fancy
+    state: present
+    update_cache: yes
+
+- name: Install diff-so-fancy and git-delta
+  apt:
+    name:
+      - diff-so-fancy
+      - git-delta
+    state: present
