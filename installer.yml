@@ -28,6 +28,8 @@
       tags: display-link
     - import_tasks: tasks/postman.yml
       tags: postman
+    - import_tasks: tasks/db_gate.yml
+      tags: db-gate
 
 - name: Setup dotfiles and IDE
   hosts: hosts
